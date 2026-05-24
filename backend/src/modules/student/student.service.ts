@@ -110,8 +110,8 @@ export class StudentsService {
             }
         },
         { $unwind: { path: '$course', preserveNullAndEmptyArrays: true } }
-    ]);
-}
+        ]);
+    }
     async update(id: string, updateStudentDto: UpdateStudentDto): Promise<Student> {
         // If password is being updated, hash it
         if (updateStudentDto.password) {
@@ -151,32 +151,32 @@ export class StudentsService {
             return student
         }
 
-async enrollInCourse(studentId: string, courseId: string): Promise<Student> {
-    const student = await this.studentModel.findById(studentId);
-    if (!student) {
-        throw new NotFoundException(`Student with ID ${studentId} not found`);
+    async enrollInCourse(studentId: string, courseId: string): Promise<Student> {
+        const student = await this.studentModel.findById(studentId);
+        if (!student) {
+            throw new NotFoundException(`Student with ID ${studentId} not found`);
+        }
+
+        const courseObjectId = new mongoose.Types.ObjectId(courseId);
+
+        // Simple fix for TypeScript error
+        const enrolledCourses = Array.isArray(student.enrolledCourses) 
+            ? student.enrolledCourses 
+            : [];
+
+        // Check if already enrolled
+        if (!enrolledCourses.some(id => id.toString() === courseId)) {
+            await this.studentModel.findByIdAndUpdate(
+                studentId,
+                { $addToSet: { enrolledCourses: courseObjectId } }
+            );
+        }
+
+        // Return updated student
+        return this.studentModel
+            .findById(studentId)
+            .populate('enrolledCourses') as Promise<Student>;
     }
-
-    const courseObjectId = new mongoose.Types.ObjectId(courseId);
-
-    // Simple fix for TypeScript error
-    const enrolledCourses = Array.isArray(student.enrolledCourses) 
-        ? student.enrolledCourses 
-        : [];
-
-    // Check if already enrolled
-    if (!enrolledCourses.some(id => id.toString() === courseId)) {
-        await this.studentModel.findByIdAndUpdate(
-            studentId,
-            { $addToSet: { enrolledCourses: courseObjectId } }
-        );
-    }
-
-    // Return updated student
-    return this.studentModel
-        .findById(studentId)
-        .populate('enrolledCourses') as Promise<Student>;
-}
     async unenrollFromCourse(studentId: string, courseId: string): Promise<Student> {
         const student = await this.studentModel.findById(studentId).exec();
         if (!student) {
