@@ -1,0 +1,397 @@
+:root {
+  --text-color: black;
+  --hover-color: rgba(255, 255, 255, 0.2);
+  --accent-color: #9945f8;
+  --nav-height: 70px;
+}
+
+
+.nav {
+  height: var(--nav-height);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  /* Glass + tint */
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 12px;
+  padding: 0 16px;
+  z-index: 1000;
+  position: fixed;
+  width:100%;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
+}
+
+.text {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  font-weight: bold;
+  font-size: 22px;
+  color: var(--text-color);
+  transition: background-color 0.3s, padding 0.3s, color 0.3s;
+}
+.textA {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  font-weight: bold;
+  font-size: 22px;
+  color: var(--text-color);
+  transition: background-color 0.3s, padding 0.3s, color 0.3s;
+}
+.text:hover {
+  cursor: pointer;
+  padding: 0 20px;
+  color: var(--accent-color);
+}
+.textA:hover{
+  cursor: pointer;
+  padding: 0 20px;
+  color: white;
+}
+
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 100%;
+}
+
+.navLinks {
+  display: flex;
+  height: 100%;
+  list-style: none;
+}
+
+.navLinks li {
+  height: 100%;
+}
+.linksA {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 100%;
+}
+
+.navLinksA {
+  display: flex;
+  height: 100%;
+  list-style: none;
+}
+
+.navLinksA li {
+  height: 100%;
+}
+
+
+.desktopLink {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  color: var(--text-color);
+  text-decoration: none;
+  font-family: Arial, Helvetica, sans-serif;
+  position: relative;
+  transition: color 0.3s, background-color 0.3s;
+}
+
+.desktopLink:hover {
+  color: var(--accent-color);
+  background-color: var(--hover-color);
+}
+
+.desktopLink::after {
+  content: '';
+  position: absolute;
+  bottom: 6px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--accent-color);
+  transform: scaleX(0);
+  transform-origin: bottom left;
+  transition: transform 0.3s ease-out;
+}
+.desktopLink:hover::after {
+  transform: scaleX(1);
+}
+.desktopLinkA {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  color: var(--text-color);
+  text-decoration: none;
+  font-family: Arial, Helvetica, sans-serif;
+  position: relative;
+  transition: color 0.3s, background-color 0.3s;
+}
+
+.desktopLinkA:hover {
+  color: white;
+}
+
+.desktopLinkA::after {
+  content: '';
+  position: absolute;
+  bottom: 6px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: white;
+  transform: scaleX(0);
+  transform-origin: bottom left;
+  transition: transform 0.3s ease-out;
+}
+
+.desktopLinkA:hover::after {
+  transform: scaleX(1);
+}
+
+/* Mobile menu button */
+.btn {
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: var(--text-color);
+  cursor: pointer;
+  display: none;
+}
+
+/* Dropdown with glass effect */
+.dropDown {
+  position: fixed;
+  top: var(--nav-height);
+  right: 0;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0;
+  z-index: 999;
+  overflow: hidden;
+
+  /* Glass + tint */
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+
+  /* Animation defaults */
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
+}
+
+.dropDown.open {
+  display: flex;
+  max-height: 100vh;
+  opacity: 1;
+}
+
+.dropDown li {
+  width: 100%;
+  padding: 16px;
+  border:none;
+  position: relative;
+}
+.dropDown li::after{
+  content: '';
+  position: absolute;
+  bottom: 6px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: var(--accent-color);
+  transform: scaleX(0);
+  transform-origin: bottom left;
+  transition: transform 0.3s ease-out;
+}
+.dropDown li:hover::after {
+  transform: scaleX(1);
+}
+.dropDown li a {
+  color: var(--text-color);
+  text-decoration: none;
+}
+.dropDown li a:hover {
+  background-color: var(--hover-color);
+}
+.dropDownA {
+  position: fixed;
+  top: var(--nav-height);
+  right: 0;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0;
+  z-index: 999;
+  overflow: hidden;
+
+  /* Glass + tint */
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+
+  /* Animation defaults */
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
+}
+
+.dropDownA.open {
+  display: flex;
+  max-height: 100vh;
+  opacity: 1;
+}
+
+.dropDownA li {
+  width: 100%;
+  padding: 16px;
+  border:none;
+  position: relative;
+}
+.dropDownA li::after{
+  content: '';
+  position: absolute;
+  bottom: 6px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: white;
+  transform: scaleX(0);
+  transform-origin: bottom left;
+  transition: transform 0.3s ease-out;
+}
+.dropDownA li:hover::after {
+  transform: scaleX(1);
+}
+.dropDownA li a {
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+.dropDownA li a:hover {
+  background-color: white;
+}
+
+
+/* Responsive behavior */
+@media (max-width: 747px) {
+  .desktopLink {
+    display: none;
+  }
+  .desktopLinkA{
+    display: none;
+  }
+  .btn {
+    display: block;
+  }
+}
+
+@media (min-width: 747px) {
+  .dropDown {
+    display: none !important;
+  }
+  .dropDownA{
+    display: none !important;
+  }
+}
+.loginSignup{
+  position: relative;
+  display: inline-block;;
+}
+.loginSignupBtn{
+  padding: 9px;
+  background:none;
+  border: 1px solid transparent;
+  position: relative;
+  border-radius: 10px;
+  font-size: 15px;
+  z-index: 1;
+  display: flex;
+  cursor: pointer;
+  transition: color 1s;
+}
+.loginSignupBtn:hover{
+  color:#9945f8;
+}
+.round {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+.round rect {
+  fill: none;
+  stroke: var(--accent-color);
+  stroke-width: 1px;
+  stroke-dasharray: 300;   /* perimeter of rect */
+  stroke-dashoffset: 300;  /* fully hidden */
+  transition: stroke-dashoffset 0.6s ease-in-out;
+}
+
+.loginSignup:hover .round rect {
+  stroke-dashoffset: 0;
+}
+.loginArrow {
+  margin-left: 4px;
+  margin-top: 2px;
+  align-self: center;
+}
+.loginSignupA{
+  position: relative;
+  display: inline-block;;
+}
+.loginSignupBtnA{
+  padding: 9px;
+  background:none;
+  border: 1px solid transparent;
+  position: relative;
+  border-radius: 10px;
+  font-size: 15px;
+  z-index: 1;
+  display: flex;
+  cursor: pointer;
+  transition: color 1s;
+}
+.loginSignupBtnA:hover{
+  color: white;
+}
+.roundA {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+.roundA rect {
+  fill: none;
+  stroke: white;
+  stroke-width: 1px;
+  stroke-dasharray: 300;   /* perimeter of rect */
+  stroke-dashoffset: 300;  /* fully hidden */
+  transition: stroke-dashoffset 0.6s ease-in-out;
+}
+
+.loginSignupA:hover .roundA rect {
+  stroke-dashoffset: 0;
+}
+.loginArrowA {
+  margin-left: 4px;
+  margin-top: 2px;
+  align-self: center;
+}

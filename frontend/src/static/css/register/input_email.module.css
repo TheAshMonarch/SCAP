@@ -1,0 +1,179 @@
+:root {
+  --text-color: black;
+  --hover-color: rgba(255, 255, 255, 0.2);
+  --accent-color: rgb(153, 69, 248);
+  --nav-height: 70px;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+.signUpPage{
+    display: flex;
+    padding:0;
+    flex-direction: column;
+    background-color: white;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;      
+    height: 100vh;
+    overflow: hidden;
+    width: 100vw;
+}
+.header{
+    width: 100%;
+    padding: 14px;
+}
+.logoAndName{
+    border-radius: 10px;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: BLACK;
+    font-weight: 700;
+    font-size: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    transition: color 0.2s, padding 0.8s;
+}
+
+.logoAndName:hover{
+    cursor: pointer;
+    color: var(--accent-color);
+    padding: 4px;
+}
+.logo{
+    vertical-align: middle;
+}
+.maincard{
+    display: flex;
+    flex-direction: column;
+    height: 80%;
+    width: max(31%,400px);
+    padding: 20px;
+}
+.headMessage{
+    width: 100%;
+    text-align: center;
+    font-size:30px;
+    margin-bottom: 30px;
+}
+.emailForm{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 14px;
+}
+.label{
+    color:rgb(120, 117, 114);
+    margin-bottom: 3px;
+}
+.inputEmail{
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(67, 66, 66, 0.203);
+    margin-bottom: 3px;
+}
+.messageBox{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    color: rgba(218, 23, 23, 0.788);
+    margin-top: 2px;
+    gap: 2px;
+}
+.message{
+    height: 10px;
+    color: rgba(218, 23, 23, 0.788);
+    font-size: small;
+}
+.submitButton{
+    background-color: var(--accent-color);
+    width: 100%;
+    padding: 9px;
+    border: 1px solid rgba(0, 0, 0, 0.208);
+    border-radius: 7px;
+    color: white;
+    margin-top: 5px;
+}
+.submitButton:hover{
+    cursor: pointer;
+    background-color: #9c54ee;
+}
+.redirect{
+    text-align: center;
+}
+.continue{
+    text-decoration: none;
+    color: var(--accent-color);
+}
+.hr{
+    margin-bottom: 20px;
+}
+.otherContinue{
+    display:flex;
+    flex-direction: column;
+}
+.googleContinue{
+    text-align: center;
+    width: 100%;
+    background: transparent;
+    padding: 10px;
+    border: 1px solid rgba(70, 69, 69, 0.231);
+}
+.googleLogo{
+    vertical-align: middle;
+    padding: 0 2px;
+}
+.appleContinue button{
+    text-decoration: none;
+    color: black;
+    background:transparent;
+    border: none;
+}
+.footer{
+    color:rgb(120, 117, 114);
+    font-size: 10px;
+}
+.tAndc{
+    color:rgb(120, 117, 114);
+
+}.bubbleLoader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+}
+.buttonLoading{
+    background-color: var(--accent-color);
+    width: 100%;
+    padding: 9px;
+    border: 1px solid rgba(0, 0, 0, 0.208);
+    border-radius: 7px;
+    color: transparent; /* Make text transparent */
+    margin-top: 5px;
+    cursor: not-allowed;
+    opacity: 0.8;    
+}
+.bubble {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: white;
+  animation: bubblePulse 1.5s ease-in-out infinite both;
+}
+
+.bubble:nth-child(1) { animation-delay: 0s; }
+.bubble:nth-child(2) { animation-delay: 0.2s; }
+.bubble:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes bubblePulse {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
+}

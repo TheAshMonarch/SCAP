@@ -1,0 +1,23 @@
+:root{
+    --accent-color: #9945f8;
+}
+.header{
+    display: flex;
+    width: 100%;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;      
+}
+.logo_and_name{
+    display: flex;
+    gap: 2px;
+    font-size: 24px;
+    padding: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.103);
+    border-radius: 20px;
+    box-shadow: 2px 2px 3px rgba(104, 102, 102, 0.059);
+    transition: padding 0.7s, color 0.4s;
+}
+.logo_and_name:hover{
+    color: var(--accent-color);
+    cursor: pointer;
+    padding: 20px;
+}

@@ -1,0 +1,111 @@
+:root {
+  --text-color: black;
+  --hover-color: rgba(255, 255, 255, 0.2);
+  --accent-color: #9945f8;
+  --nav-height: 70px;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.loginPage{
+    height: calc(100vh - 60px);
+    display: flex;
+    align-items: center;
+    margin-top: 60px;
+    flex-direction: column;
+   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+   overflow: hidden;
+}
+.maincard{
+    height: 90%;
+    width: max(31%,400px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: small;
+}
+@media(max-width: 680px){
+    .maincard{
+        width: 80%;
+    }
+}
+.logoAndName{
+  display: flex;
+  align-items: center;
+  font-size: 28px;
+  color: var(--text-color);
+  transition: color 0.7s, padding 0.7s;
+}
+.logoAndName:hover{
+    cursor: pointer;
+    color: var(--accent-color);
+    padding: 4px;
+}
+.googleLogo{
+    height: 100%;
+    vertical-align: middle;
+    padding:2px;
+}
+.logoq{
+  vertical-align: middle;
+  margin-top: 8px;
+}
+.loginText{
+    margin-top:-25px;
+}
+.googleContinue{
+    margin-top:-30px;
+    text-align: center;
+    width: 100%;
+    background-color: rgba(242, 237, 237, 0.258);
+    border: 1px solid rgba(192, 189, 189, 0.231);
+}
+.googleContinue button{
+    text-decoration: none;
+    color: black;
+    background:transparent;
+    border: none;
+}
+.hr{
+    margin-top: -25px;
+}
+#label{
+    color:rgb(120, 117, 114);
+    margin-top: -30px;
+    margin-bottom: 5px;
+}
+.inputEmail{
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.203);
+}
+.continue{
+    background-color: var(--accent-color);
+    width: 100%;
+    margin-top: 25px;
+    padding: 9px;
+    border: 1px solid rgba(0, 0, 0, 0.208);
+    border-radius: 7px;
+    color: white;
+}
+.continue:hover{
+    cursor: pointer;
+    background-color: #9c54ee;
+}
+.nameInputButton{
+    margin-top:-12px;
+    margin-bottom: -25px;
+}
+.disclaimerRedirect{
+    margin-top: -20px;
+    margin-bottom:65px ;
+    color:rgb(120, 117, 114);
+    font-size: 12px;
+}
+.disclaimerRedirect a{
+    text-decoration: none;
+    color: var(--accent-color);
+}
