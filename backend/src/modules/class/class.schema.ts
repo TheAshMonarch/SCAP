@@ -28,7 +28,7 @@ export class Class{
     date!: string;
 
     @Prop({})
-    classDocuments!: string;
+    classDocuments?: string;
 
     @Prop({ type: String })
     venue!: string;

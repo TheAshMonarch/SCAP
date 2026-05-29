@@ -87,31 +87,66 @@ export class StudentsService {
         return student;
     }
 
-    async findEnrolledClasses(studentId: string): Promise<Class[]> {
-    return this.studentModel.aggregate([
-        { $match: { _id: new Types.ObjectId(studentId) } },
-        { $unwind: '$enrolledCourses' },
-        {
-            $lookup: {
-                from: 'classes',           
-                localField: 'enrolledCourses',
-                foreignField: 'course',
-                as: 'classes'
-            }
-        },
-        { $unwind: '$classes' },
-        { $replaceRoot: { newRoot: '$classes' } },
-        {
-            $lookup: {
-                from: 'courses',
-                localField: 'course',
-                foreignField: '_id',
-                as: 'course'
-            }
-        },
-        { $unwind: { path: '$course', preserveNullAndEmptyArrays: true } }
-        ]);
-    }
+async findEnrolledClasses(studentId: string): Promise<Class[]> {
+  return this.studentModel.aggregate([
+      // 1. Find the specific student
+      { $match: { _id: new Types.ObjectId(studentId) } },
+      
+      // 2. Flatten the enrolled courses array
+      { $unwind: '$enrolledCourses' },
+
+      // 3. Dynamic Lookup that handles both ObjectId and String formats
+      {
+          $lookup: {
+              from: 'classes',
+              let: { studentCourseId: '$enrolledCourses' }, // Pass down the student's course ObjectId
+              pipeline: [
+                {
+                  $match: {
+                    $expr: {
+                      $or: [
+                        { $eq: ['$course', '$$studentCourseId'] },                     // Match if it's an ObjectId
+                        { $eq: ['$course', { $toString: '$$studentCourseId' }] }       // Match if it's a String
+                      ]
+                    }
+                  }
+                }
+              ],
+              as: 'classes'
+          }
+      },
+      
+      // 4. Flatten the matched classes
+      { $unwind: '$classes' },
+      
+      // 5. Promote the class to be the main document
+      { $replaceRoot: { newRoot: '$classes' } },
+      
+      // 6. Second Dynamic Lookup to fetch Course Details (also handles mixed string/object formats)
+      {
+          $lookup: {
+              from: 'courses',
+              let: { classCourseId: '$course' }, // Could be a string or an object
+              pipeline: [
+                {
+                  $match: {
+                    $expr: {
+                      $or: [
+                        { $eq: ['$_id', '$$classCourseId'] },
+                        { $eq: [{ $toString: '$_id' }, '$$classCourseId'] }
+                      ]
+                    }
+                  }
+                }
+              ],
+              as: 'course'
+          }
+      },
+      
+      // 7. Flatten the course array object
+      { $unwind: { path: '$course', preserveNullAndEmptyArrays: true } }
+  ]).exec();
+}
     async update(id: string, updateStudentDto: UpdateStudentDto): Promise<Student> {
         // If password is being updated, hash it
         if (updateStudentDto.password) {

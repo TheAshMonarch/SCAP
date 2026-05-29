@@ -78,8 +78,10 @@ export class StudentsController {
     if (!userId) {
         throw new BadRequestException('User ID not found in token');
     }
-
-    return this.studentsService.findEnrolledClasses(userId);
+    const classes = await this.studentsService.findEnrolledClasses(userId);
+    if(!classes) throw new NotFoundException("classes not found for userid:", userId);
+    console.log(classes);
+    return classes;
   }
 
   @Get('email/:email')

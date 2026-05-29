@@ -1,7 +1,6 @@
 // test-api.js
 const API_BASE = 'http://localhost:3000';
 const sid = "69fd236d2fc2344693371b96";
-
 async function testLogin() {
     try {
         const loginData = {
@@ -27,9 +26,8 @@ async function testLogin() {
             console.log('Access Token received');
 
             // Now test a protected route
-            await testProtectedRoute(token);
-            await enrollStudent(sid, "6a11e67c7dbe5ca0a3b831aa", token);
         }
+        return loginResult.access_token;
 
     } catch (error) {
         console.error('Error:', error.message);
@@ -51,8 +49,8 @@ async function testProtectedRoute(token) {
     console.log('Protected Route Response:', data);
 }
 
-async function enrollStudent(studentId, courseId, accessToken) {
-    if (!accessToken) {
+async function enrollStudent(studentId, courseId, accessT) {
+    if (!accessT) {
         console.log('No token. Logging in first...');
         await login();
     }
@@ -63,7 +61,7 @@ async function enrollStudent(studentId, courseId, accessToken) {
         const res = await fetch(`${API_BASE}/students/${studentId}/enroll/${courseId}`, {
             method: 'POST',
             headers: {
-                'Authorization': `Bearer ${accessToken}`,
+                'Authorization': `Bearer ${accessT}`,
                 'Content-Type': 'application/json'
             }
         });
@@ -82,4 +80,21 @@ async function enrollStudent(studentId, courseId, accessToken) {
         console.error(' Request Error:', err.message);
     }
 }
-testLogin();
+
+async function getEnrolledClasses(access_token){
+    try{
+        console.log("fetching data for student ")
+        const res = await fetch(`${API_BASE}/students/me/classes/`, {
+            headers: {
+                'Authorization': `Bearer ${access_token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        const data = await res.json();
+        if(res.ok) console.log(`retrieved successfull here is the recieved data` , data);
+    }catch(error){
+        console.error(error.message);
+    }
+}
+const at = await testLogin();
+getEnrolledClasses(at);

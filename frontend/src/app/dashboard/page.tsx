@@ -35,25 +35,7 @@ export default function Dashboard() {
       window.location.href = "/";
     }
   };
-
-  const fetchClasses = async () => {
-    try {
-      const classes = await api.get<_Class[]>('/classes'); // Adjust endpoint as needed
-      setClasses(classes);
-    } catch (error) {
-      console.error("Failed to fetch classes", error);
-    }
-  };
-
-  useEffect(() => {
-    if (user) {
-      fetchClasses();
-    }
-  }, [user]);
   
-  console.log("User profile loaded:", user);
-  console.log("User's enrolled courses:");
-  console.log(classes)
   const [ search, setSearch ] = useState("");
   const handleSubmit = () => {}
 

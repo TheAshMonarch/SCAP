@@ -38,7 +38,8 @@ export interface Student {
   enrolledCourses?: any[];
 }
 export interface _Class{
-  course: string;
+  _id: string
+  course: any;
   professor: string,
   schedule: string,
   time: string,
