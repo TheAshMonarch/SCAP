@@ -52,7 +52,7 @@ export default function Dashboard() {
   }, [user]);
   
   console.log("User profile loaded:", user);
-  console.log("User's enrolled courses:", user.enrolledCourses);
+  console.log("User's enrolled courses:");
   console.log(classes)
   const [ search, setSearch ] = useState("");
   const handleSubmit = () => {}
@@ -77,7 +77,7 @@ export default function Dashboard() {
           {/* sidebar */}
           <div className=" w-3/6 flex-col border-orange-600 flex">
             <p className="font-['Brush_Script_MT'] self-start md:text-3xl text-lg">
-              {user?.faculty?.charAt(0).toUpperCase() + user?.faculty?.slice(1)} {user?.department?.toLowerCase()} Department
+              {(user?.faculty ?? '').charAt(0).toUpperCase() + (user?.faculty ?? '').slice(1)} {user?.department?.toLowerCase()} Department
             </p>
             <div className="">
               <span className="text-s text-gray-400">Ongoing-classes</span> 
