@@ -78,7 +78,7 @@ export default function TechTownDashboard() {
         </div>
         <nav className="flex flex-col gap-1">
           <div className="p-3 rounded-lg text-sm font-semibold bg-slate-900 text-white shadow-inner cursor-pointer">
-            My Classes
+            My Classes yo
           </div>
           <div className="p-3 rounded-lg text-sm font-medium text-red-100 hover:bg-red-700 transition-colors cursor-pointer">
             Enrolled Courses
