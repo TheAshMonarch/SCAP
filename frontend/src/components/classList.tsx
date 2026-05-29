@@ -81,7 +81,7 @@ export default function TechTownDashboard() {
             My Classes yo
           </div>
           <div className="p-3 rounded-lg text-sm font-medium text-red-100 hover:bg-red-700 transition-colors cursor-pointer">
-            Enrolled Courses
+            Enrolled Courses yo
           </div>
           <div className="p-3 rounded-lg text-sm font-medium text-red-100 hover:bg-red-700 transition-colors cursor-pointer">
             Campus Venues
