@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Types } from 'mongoose';
+import mongoose, { Document, Types  } from 'mongoose';
 import { Counter, CounterSchema } from './counter.schema';
 import { Course } from '../course/course.schema'
 import { Class } from '../class/class.schema'
@@ -36,6 +36,9 @@ export class Student {
     @Prop({ required: [true, "Student email is required"], unique: true})
     email!: string;
 
+    @Prop({ unique: true })
+    regNo!: string;
+
     @Prop({ required: true, trim: true, maxlength: 50 })
     firstName!: string;
 
@@ -61,8 +64,8 @@ export class Student {
      })
     level!: Level;
 
-    @Prop({ type: Types.ObjectId, ref: 'Course' })
-    enrolledCourses!: Types.ObjectId[] | Course;
+    @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }])
+    enrolledCourses!: Course[];
 
     @Prop({ required: true })
     semester!: string 

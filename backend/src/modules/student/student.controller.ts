@@ -57,8 +57,10 @@ export class StudentsController {
       console.log('findMe req.student:', req.student);
       throw new BadRequestException('User ID not found in token');
     }
-
-    return this.studentsService.findById(userId);
+    console.log('before find by id service called');
+    const s = await this.studentsService.findById(userId);
+    console.log(s);
+    return s;
   }
 
   @Get(':id')
@@ -80,7 +82,6 @@ export class StudentsController {
     }
     const classes = await this.studentsService.findEnrolledClasses(userId);
     if(!classes) throw new NotFoundException("classes not found for userid:", userId);
-    console.log(classes);
     return classes;
   }
 
@@ -117,11 +118,20 @@ export class StudentsController {
     return this.studentsService.softDelete(id);
   }
 
-  @Post(':id/enroll/:courseId')
-  async enroll(@Param('id') id: string, @Param('courseId') courseId: string) {
-    this.validateObjectId(id);
-    this.validateObjectId(courseId);
-    return this.studentsService.enrollInCourse(id, courseId);
+  @Post('enroll')
+  async enroll(@Req() req: any, @Body() body: { cid: string}) {
+    const uid = req.student?.sub ?? 
+                   req.student?.id ?? 
+                   req.student?._id;
+
+    if (!uid) {
+        throw new BadRequestException('User ID not found in token');
+    }
+    console.log("were in the enroll controller")
+
+    this.validateObjectId(uid);
+    this.validateObjectId(body.cid);
+    return this.studentsService.enrollInCourse(uid, body.cid);
   }
 
   @Delete(':id/unenroll/:courseId')

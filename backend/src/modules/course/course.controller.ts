@@ -11,11 +11,10 @@ import {
   DefaultValuePipe,
   HttpCode,
   HttpStatus,
-  ParseUUIDPipe,
   BadRequestException,
   UseGuards,
-  Request,
-  UnauthorizedException,
+  Req,
+  NotFoundException,
 } from '@nestjs/common';
 import { CourseService } from './course.service';
 import { StudentsService } from '../student/student.service';
@@ -33,23 +32,10 @@ export class CourseController {
     return this.courseService.create(createCourseDto);
   }
 
-  @UseGuards(AuthGuard('jwt'))
   @Get()
-  async findEnrolled(@Request() req: any, @Query() query: any) {
-    const studentId = req.user?.sub || req.user?._id;
-    if (!studentId) throw new UnauthorizedException();
-
-    const student = await this.studentsService.findById(studentId);
-    const courseIds = Array.isArray(student.enrolledCourses) ? student.enrolledCourses.map((c: any) => c.toString()) : [];
-
-    const limit = parseInt(query.limit) || 10;
-    const page = parseInt(query.page) || 1;
-
-    const filter: any = { _id: { $in: courseIds } };
-    if (query.faculty) filter.faculty = query.faculty;
-    if (query.courseCode) filter.courseCode = query.courseCode;
-
-    return this.courseService.findAll(filter, { page, limit });
+  async find(){
+    const c = await this.courseService.findAll();
+    return c;
   }
 
   @Get(':id')

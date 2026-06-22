@@ -62,6 +62,7 @@ export class StudentsService {
         const student = await this.studentModel
             .findById(id)
             .select('-password, -refreshToken',)
+            .populate('enrolledCourses')
             .exec();
         if(!student) throw new NotFoundException(`student with id ${id} not found`);
 

@@ -48,6 +48,14 @@ export interface _Class{
   venue: string;
   attendees: string[];
 }
+export interface Course{
+  _id?: string;
+  courseCode?: string;
+  courseTitle?: string
+  faculty?: string;
+  credits?: number;
+  description?: string;
+}
 
 // ====================== API CLIENT ======================
 export const api = {

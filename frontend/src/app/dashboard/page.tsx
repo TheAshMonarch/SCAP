@@ -4,17 +4,21 @@ import { api, setAccessToken, clearAccessToken } from '../../lib/api';   // Upda
 import type { _Class, Student } from '../../lib/api';
 import Search  from '@/components/search';
 import ClassList from '@/components/classList';
+import Navbar from '@/components/navbar';
 
 export default function Dashboard() {
   const [user, setUser] = useState<Student | null>(null);
   const [loading, setLoading] = useState(true);
   const [classes, setClasses] = useState<_Class[]>([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     const loadProfile = async () => {
       try {
-        const data = await api.get('/students/me');   // or wherever your profile route is
+        const data = await api.get('/students/me'); 
         setUser(data);
+        setIsLoggedIn(true);
+        console.log(data.enrolledCourses);
       } catch (error) {
         console.error("Failed to load profile", error);
       } finally {
@@ -45,7 +49,10 @@ export default function Dashboard() {
   return (
     <div className="h-screen w-98 flex flex-col">
 
-
+      {/* Navbar */}
+      <div>
+        <Navbar isLoggedIn={isLoggedIn} sid={user?._id}/>
+      </div>
       {/* //Main content */}
       <div className="h-screen mt-24 w-full flex flex-col items-center ">
         <button className="bg-orange-500 w-1/12 h-[20px]" onClick={handleLogout}></button>
@@ -53,7 +60,7 @@ export default function Dashboard() {
 
         </div>
         {/*image div */}
-        <div className="w-11/12 bg-dashboard-bg bg-cover h-2/6 min-h-[100px] rounded-lg"/>
+        <div className="w-11/12 bg-dashboard-bg bg-center h-3/6 min-h-[200px] rounded-lg"/>
         {/* sidebar | content*/}  
         <div className="flex bg justify-between w-11/12 h-1/12 mt-8 ">
           {/* sidebar */}

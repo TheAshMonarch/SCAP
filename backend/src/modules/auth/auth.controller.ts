@@ -31,10 +31,6 @@ async login(
     @Body() loginDto: LoginDto,
     @Res({ passthrough: true }) res: Response
 ) {
-    console.log('=== LOGIN ENDPOINT HIT ===');
-    console.log('Raw Body:', loginDto);
-    console.log('Email:', loginDto?.email);
-    console.log('Password exists:', !!loginDto?.password);
 
     try {
         const student = await this.authService.validateStudent(
@@ -52,7 +48,7 @@ async login(
             path: '/',
         });
 
-        console.log('✅ Login successful');
+        console.log('Login successful');
 
         return { 
             access_token: result.access_token,
@@ -60,13 +56,12 @@ async login(
         };
 
     } catch (error: any) {
-        console.error('❌ ERROR in login controller:', error);
+        console.error('ERROR in login controller:', error);
         throw error;
     }
 }
     @Post('register')
     async register(@Body() registerDto: RegisterDto) {
-        console.log('AuthController.register registerDto:', registerDto);
         let existing: Student | null = null;
         try {
             existing = await this.studentsService.findByEmail(registerDto.email);
@@ -74,21 +69,17 @@ async login(
             if (!(e instanceof NotFoundException)) throw e;
         }
 
-            console.log('AuthController.register existing:', existing);
             if (existing) throw new BadRequestException('Email already in use');
             const student = await this.studentsService.create(registerDto);
-            console.log('AuthController.register created student:', student);
             return this.authService.login(student);
         }
 
         @UseGuards(AuthGuard('jwt'))
         @Get('profile')
         async getProfile(@Req() request: any) {
-            console.log('AuthController.getProfile request.user:', request.user);
             const uid = request.user?.sub || request.user?._id;
             if (!uid) throw new BadRequestException('Invalid token: missing user ID');
             const user = await this.studentsService.findByIdWithCourses(uid);
-            console.log('AuthController.getProfile found user:', user);
             if (!user) throw new NotFoundException('User not found');
             return user;
         }
@@ -117,19 +108,14 @@ async login(
         }
 
         // Generate new access token
-        const newAccessToken = this.jwtService.sign({
-            sub: student._id.toString(),
-            email: student.email,
-            username: student.username,
-        }, { expiresIn: '15m' });
+        const newAccessToken = this.authService.generateAccessToken(payload);
 
-        // Optional: Refresh Token Rotation (more secure)
-        // const newRefreshToken = this.jwtService.sign({...}, { expiresIn: '7d' });
-        // await this.studentsService.saveRefreshToken(student._id, newRefreshToken);
+        const newRefreshToken = this.authService.generateRefreshToken(payload);
+        await this.studentsService.setCurrentRefreshToken(student._id, newRefreshToken);
 
         return {
             access_token: newAccessToken,
-            // refresh_token: newRefreshToken  // if using rotation
+            refresh_token: newRefreshToken  // if using rotation
         };
     }
 

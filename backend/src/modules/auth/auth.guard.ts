@@ -19,9 +19,6 @@ export class AuthGuard implements CanActivate{
 
         const token = this.extractTokenFromHeader(authHeader);
 
-        console.log('AuthGuard token:', token);
-        console.log('AuthGuard authHeader:', authHeader);
-
         if(!token) throw new UnauthorizedException();
 
         try{
